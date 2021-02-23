@@ -2,6 +2,7 @@ package com.example.instagrams24;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -28,6 +29,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private Button buttonGetAllData;
 
     private String allKickBoxers;
+    private Button buttonNext;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,6 +47,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         textViewGetData = findViewById(R.id.textViewGetData);
         buttonGetAllData = findViewById(R.id.buttonGetAllData);
+        buttonNext = findViewById(R.id.buttonNext);
 
         textViewGetData.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -65,8 +68,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             @Override
             public void onClick(View v) {
                 allKickBoxers = "";
-
                 ParseQuery<ParseObject> queryAll = ParseQuery.getQuery("KickBoxer");
+                //Like where clause of sql
+                //queryAll.whereGreaterThan("punchPower", "100");
                 queryAll.findInBackground(new FindCallback<ParseObject>() {
                     @Override
                     public void done(List<ParseObject> objects, ParseException e) {
@@ -85,6 +89,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         }
                     }
                 });
+            }
+        });
+
+        buttonNext.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, SignUpLoginActivity.class);
+                startActivity(intent);
             }
         });
     }
